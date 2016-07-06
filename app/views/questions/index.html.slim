@@ -1,5 +1,7 @@
 h3.text-center Вопросы
 
-questions
+- @questions.each do |q|
 
-= link_to 'Создать вопрос', new_question_path
+  p = q.title
+
+p = link_to 'Создать вопрос', new_question_path
