@@ -1,0 +1,21 @@
+h2 = @question.title
+p = @question.body
+
+h3 Ответы
+- @question.answers.each do |answer| 
+  p = answer.body 
+
+h4 Просто добавь ответ:
+
+= form_for([@question, @question.answers.build]) do |f| 
+
+  p = f.text_area :body 
+
+  p = f.submit 
+
+= link_to 'Вопросы', questions_path
+br
+= link_to 'Редактировать', edit_question_path
+
+
+

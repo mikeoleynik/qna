@@ -1,0 +1,8 @@
+h3.text-center Вопросы
+
+- @questions.each do |q|
+
+  p = q.title
+  = link_to content_tag('span', '', class: "fa fa-pencil"), edit_question_path(q), class: "action"
+
+p = link_to 'Создать вопрос', new_question_path
