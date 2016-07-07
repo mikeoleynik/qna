@@ -1,8 +1,20 @@
 h3.text-center Вопросы
 
-- @questions.each do |q|
-
-  p = q.title
-  = link_to content_tag('span', '', class: "fa fa-pencil"), edit_question_path(q), class: "action"
-
+table class="table"
+  thead
+    tr
+      th 
+      th 
+      th
+      th
+  tbody
+    - @questions.each do |q|
+        tr
+          td= q.title
+          td= link_to content_tag('span', '', class: "fa fa-eye fa-2x"), question_path(q), class: "action"
+          td= link_to content_tag('span', '', class: "fa fa-pencil fa-2x"), edit_question_path(q), class: "action"
+          td= link_to content_tag('span', '', class: "fa fa-trash fa-2x"), question_path(q), method: :delete, data: { confirm: 'Вы уверены?' }, class: "action"
+br
 p = link_to 'Создать вопрос', new_question_path
+
+              
