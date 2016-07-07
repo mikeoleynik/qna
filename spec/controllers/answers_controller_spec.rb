@@ -30,7 +30,7 @@ describe AnswersController do
 
     context 'with invalid attributes' do
       it 'does not save the new answer in the database' do
-        expect { post :create, question_id: question.id, answer: attributes_for(:invalid_answer) }.to_not change(question.answers, :count)
+        expect { post :create, question_id: question.id, answer: attributes_for(:invalid_answer) }.to_not change(Answer, :count)
       end
 
       it 'render new view' do
