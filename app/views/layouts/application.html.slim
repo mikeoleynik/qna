@@ -35,6 +35,10 @@ html lang="en"
     .container
       .row
         .col-lg-9
+          p class="notice"
+          = notice 
+          p class="alert"
+          = alert 
           = bootstrap_flash
           = yield
         .col-lg-3
