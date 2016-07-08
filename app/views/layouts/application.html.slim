@@ -28,9 +28,12 @@ html lang="en"
           a.navbar-brand href="#"Qna
           .navbar-collapse.collapse.navbar-responsive-collapse
             ul.nav.navbar-nav
-              li= link_to "Link 1", "/path1"
+              li= link_to "Главная", root_path
               li= link_to "Link 2", "/path2"
               li= link_to "Link 3", "/path3"
+            ul.nav.navbar-nav.navbar-right
+              li= link_to "Вход", new_user_session_path
+              li= link_to "Регистрация", new_user_registration_path
 
     .container
       .row
