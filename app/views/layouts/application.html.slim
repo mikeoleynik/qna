@@ -32,6 +32,7 @@ html lang="en"
               li= link_to "Link 2", "/path2"
               li= link_to "Link 3", "/path3"
             ul.nav.navbar-nav.navbar-right
+              li= link_to "Выход", destroy_user_session_path, method: :delete
               li= link_to "Вход", new_user_session_path
               li= link_to "Регистрация", new_user_registration_path
 

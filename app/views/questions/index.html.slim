@@ -13,7 +13,8 @@ table class="table"
           td= q.title
           td= link_to content_tag('span', '', class: "fa fa-eye fa-2x"), question_path(q), class: "action"
           td= link_to content_tag('span', '', class: "fa fa-pencil fa-2x"), edit_question_path(q), class: "action"
-          td= link_to content_tag('span', '', class: "fa fa-trash fa-2x"), question_path(q), method: :delete, data: { confirm: 'Вы уверены?' }, class: "action"
+          - if user_signed_in? && current_user.id == q.user_id
+            td= link_to content_tag('span', '', class: "fa fa-trash fa-2x"), question_path(q), method: :delete, data: { confirm: 'Вы уверены?' }, class: "action"
 br
 p = link_to 'Создать вопрос', new_question_path
 
