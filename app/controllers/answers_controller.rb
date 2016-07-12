@@ -6,13 +6,28 @@ class AnswersController < ApplicationController
     @answer = Answer.new
   end
 
+  def show    
+  end
+
   def create
     @answer = @question.answers.new(answer_params)
-
+    @answer.user_id = current_user.id
+    
     if @answer.save
-      redirect_to @question
+      redirect_to  @answer.question
     else
       render :new
+    end
+  end
+
+  def destroy
+    @answer = Answer.find(params[:id])
+    
+    if @answer.user_id == current_user.id
+      @answer.destroy
+      redirect_to  @answer.question
+    else
+      redirect_to root_url
     end
   end
 
