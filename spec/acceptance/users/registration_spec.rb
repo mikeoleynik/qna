@@ -1,19 +1,12 @@
 require 'rails_helper'
 
-feature 'User sign in', %q{
+feature 'User registration', %q{
   In order to be able to ask question
   As an User
   I want to be able to sign in
 } do 
 
   let(:user) { create(:user) }
-
-  # scenario 'Registered user try to sign in' do
-  #   sign_in(user)
-
-  #   expect(page).to have_content 'Signed in successfully.'
-  #   expect(current_path).to eq root_path
-  # end
 
   scenario 'Non-registered user try to registered' do
 
@@ -24,7 +17,7 @@ feature 'User sign in', %q{
     fill_in 'Password confirmation', with: '12345678'
     click_on 'Sign up'
 
-    expect(page).to have_content 'Добро пожаловать! Вы успешно зарегистрировались.'
+    expect(page).to have_content 'Welcome! You have signed up successfully.'
     expect(current_path).to eq root_path
   end
 
@@ -34,11 +27,10 @@ feature 'User sign in', %q{
     click_on 'Регистрация'
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
-    fill_in 'Password confirmation', with: user.password
+    fill_in 'Password confirmation', with: user.password_confirmation
     click_on 'Sign up'
 
-    expect(page).to have_content 'Вы уже вошли в систему.'
-    expect(current_path).to eq root_path
+    expect(page).to have_content 'You are already signed in.'
   end
 
 end

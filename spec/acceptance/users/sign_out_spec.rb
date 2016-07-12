@@ -12,7 +12,7 @@ feature 'User sign out', %q{
     sign_in(user)
     click_on 'Выход'
 
-    expect(page).to have_content 'Выход из системы выполнен.'
+    expect(page).to have_content 'Signed out successfully.'
     expect(current_path).to eq root_path
   end
 

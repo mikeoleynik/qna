@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 describe QuestionsController do
+
   let(:question) { create(:question) }
+  let!(:user) { create(:user) }
   
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
