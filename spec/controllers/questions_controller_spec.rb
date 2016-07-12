@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe QuestionsController do
-
+  login_user
   let(:question) { create(:question) }
-  let!(:user) { create(:user) }
+
   
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
@@ -32,7 +32,6 @@ describe QuestionsController do
   end
 
   describe 'GET #new' do
-    login_user
 
     before { get :new }
       
@@ -46,7 +45,6 @@ describe QuestionsController do
   end
 
   describe 'GET #edit' do
-    login_user
     
     before { get :edit, id: question }
       
@@ -60,7 +58,6 @@ describe QuestionsController do
   end
 
   describe 'POST #create' do
-    login_user
 
     context 'with valid attributes' do
       it 'saves the new question in the database' do
@@ -86,7 +83,6 @@ describe QuestionsController do
   end
 
   describe 'PATCH #update' do
-    login_user
 
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
@@ -123,7 +119,6 @@ describe QuestionsController do
   end
 
   describe 'DELETE #destroy' do
-    login_user
     
     it 'deleted question' do
       question
