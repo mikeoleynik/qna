@@ -30,7 +30,7 @@ feature 'User registration', %q{
     fill_in 'Password confirmation', with: user.password_confirmation
     click_on 'Sign up'
 
-    expect(page).to have_content 'You are already signed in.'
+    expect(page).to have_content ' has already been taken'
   end
 
 end
