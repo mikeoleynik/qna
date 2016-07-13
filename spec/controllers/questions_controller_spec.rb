@@ -119,15 +119,25 @@ describe QuestionsController do
   end
 
   describe 'DELETE #destroy' do
-    
-    it 'deleted question' do
-      question
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
-    end 
+    context 'User delete his question' do
+      let!(:question) { create(:question, user: @user) }
 
-    it 'redirect to index view' do
-      delete :destroy, id: question
-      expect(response).to redirect_to questions_path
+      it 'delete the question' do
+        expect { delete :destroy, id: question }.to change(@user.questions, :count).by(-1)
+      end
+
+      it 'redirects to index' do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    context "User can not delete alian question" do
+      let!(:question) { create(:question, user: @user) }
+
+      it 'does not delete the question' do
+        expect { delete :destroy, id: question }.to change(Question, :count)
+      end
     end
   end
 end
