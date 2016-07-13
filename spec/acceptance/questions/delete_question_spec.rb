@@ -6,22 +6,21 @@ feature 'Delete question', '
   I want to destroy question' do
 
   let(:current_user) { create(:user) }
-  let(:his_question) { create(:question, user: current_user) }
+  let(:my_question) { create(:question, user: current_user) }
   let(:alien_question) { create(:question) }
 
 
   scenario 'auth user try to delete his question' do
     sign_in(current_user)
-    visit question_path(his_question)
+    visit question_path(my_question)
     click_on 'Удалить'
 
-    expect(page).to have_content 'Your question deleted.'
-    expect(page).to_not have_content his_question.title
+    expect(page).to_not have_content my_question.title
   end
 
   scenario 'auth user can not delete alien question' do
     sign_in(current_user)
-    visit question_path(alien_question)
+    visit root_path
 
     expect(page).to_not have_content 'Удалить'
   end
@@ -29,6 +28,6 @@ feature 'Delete question', '
   scenario 'non auth user try to delete the question' do
     visit root_path
 
-    expect(page).to_not have_content 'Delete question'
+    expect(page).to_not have_content 'Удалить'
   end
 end

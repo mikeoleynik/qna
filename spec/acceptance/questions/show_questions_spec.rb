@@ -1,11 +1,15 @@
+
 require 'rails_helper'
 
-feature 'anyone can read all questions and all answers' do
-  let(:questions) {create_list(:question, 5)}
+feature 'View all questions', %q{
+  The user can view a list
+  of all the questions
+} do
 
-  scenario 'reading questions able anyone' do
+ let!(:questions) { create_list(:question,2) }
+
+  scenario 'Any User view questions' do
     visit questions_path
-    expect(page).to have_content 'MyString' , count: 5
-    expect(page).to have_content 'MyTextttttt' , count: 5
-    end
+    questions.each { |question| expect(page).to have_content question.title }
+  end
 end

@@ -3,21 +3,20 @@ require 'rails_helper'
 feature 'Create answer' do
 
   let (:user) {create(:user)}
+  let(:question) { create(:question, user: user) }
   
   scenario 'Authenticate user can write answer' do
     sign_in(user)
     
-    visit questions_path
-    click_on 'Показать'
+    visit question_path(question)
     fill_in 'Body', with:'Ответ'
     click_on 'Создать'
 
-    expect(page).to have_content 'it is my answer'
+    expect(page).to have_content 'Ответ'
   end
 
   scenario 'Nonauthenticate user can not write answer' do
-    visit questions_path
-    click_on 'Показать'
+    visit question_path(question)
     fill_in 'Body', with:'Ответ'
     click_on 'Создать'
 
