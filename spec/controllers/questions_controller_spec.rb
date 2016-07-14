@@ -58,15 +58,16 @@ describe QuestionsController do
   end
 
   describe 'POST #create' do
-    login_user
+
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
+        expect { post :create, question: attributes_for(:question) }.to change(@user.questions, :count).by(1)
       end   
 
-      it 'increments user questions count' do
-        expect{ post :create, question: attributes_for(:question) }.to change(@user.questions, :count).by 1
-      end  
+      it  'compare users_id with new question users_id' do
+        post :create, question: attributes_for(:question)
+        expect(assigns(question.user.id)).to eq @user_id
+      end
 
       it 'renders create view' do
         post :create, question: attributes_for(:question)

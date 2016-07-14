@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'View the question and answer', '
   User want to view the question and answers' do
-
+  let(:user) { create(:user) }
   let(:question) { create(:question) }
   let(:answers) { create_list(:answer, 2, question: question, user: user) }
 

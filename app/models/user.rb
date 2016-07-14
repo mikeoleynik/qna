@@ -8,6 +8,6 @@ class User < ActiveRecord::Base
   has_many :answers, dependent: :destroy
 
   def author_of?(unit)
-    current_user.id == unit.user_id
+    id == unit.user_id
   end
 end
