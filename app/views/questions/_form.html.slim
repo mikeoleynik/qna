@@ -1,7 +1,11 @@
 = form_for @question do |f|
-
+  
+  = f.label :title
+  br
   = f.text_field :title, class: "form-control", placeholder: "Заголовок"
   br
-  = f.text_area :body, class: "form-control", placeholder: "Тело вопроса"
+  = f.label :body
+  br
+  = f.text_area :body, class: "form-control", placeholder: "Вопрос"
   br
   = f.submit 'Создать', class: 'btn btn-info active'

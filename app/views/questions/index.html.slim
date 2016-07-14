@@ -3,7 +3,7 @@ h3.text-center Вопросы
 table class="table"
   thead
     tr
-      th 
+      th
       th 
       th
       th
@@ -11,10 +11,8 @@ table class="table"
     - @questions.each do |q|
         tr
           td= q.title
-          td= link_to content_tag('span', '', class: "fa fa-eye fa-2x"), question_path(q), class: "action"
-          td= link_to content_tag('span', '', class: "fa fa-pencil fa-2x"), edit_question_path(q), class: "action"
-          td= link_to content_tag('span', '', class: "fa fa-trash fa-2x"), question_path(q), method: :delete, data: { confirm: 'Вы уверены?' }, class: "action"
+          td= link_to 'Показать', question_path(q)
+          - if user_signed_in? && current_user.id == q.user_id
+            td= link_to 'Удалить', question_path(q), method: :delete
 br
 p = link_to 'Создать вопрос', new_question_path
-
-              
