@@ -18,7 +18,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-    @question.user_id = current_user.id
+    @question.user = current_user
     
     if @question.save
       redirect_to @question
@@ -36,16 +36,21 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    if @question.user_id == current_user.id
+      @question.destroy
+      redirect_to questions_path
+    else
+      flash[:notice] = 'No rights to delete'
+      redirect_to questions_path
+    end
   end
 
   private
-  def load_question
-    @question = Question.find(params[:id])
-  end
+    def load_question
+      @question = Question.find(params[:id])
+    end
 
-  def question_params
-    params.require(:question).permit(:title, :body)
-  end
+    def question_params
+      params.require(:question).permit(:title, :body)
+    end
 end

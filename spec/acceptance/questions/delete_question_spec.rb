@@ -13,6 +13,7 @@ feature 'Delete question', '
   scenario 'auth user try to delete his question' do
     sign_in(current_user)
     visit question_path(my_question)
+    expect(page).to have_content my_question.body
     click_on 'Удалить'
 
     expect(page).to_not have_content my_question.title

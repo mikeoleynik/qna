@@ -16,6 +16,7 @@ feature 'Delete answer', %q{
   scenario 'auth user delete his answer' do
     sign_in(current_user)
     visit question_path(his_question)
+    expect(page).to have_content his_answer.body
     click_on 'Удалить'
 
     expect(page).to_not have_content his_answer.body
