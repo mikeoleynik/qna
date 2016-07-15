@@ -12,7 +12,7 @@ feature 'Create answer', %q{
     sign_in(user)
     
     visit question_path(question)
-    fill_in 'Body', with:'ТекстОтвета'
+    fill_in 'Просто добавь ответ:', with:'ТекстОтвета'
     click_on 'Создать'
     
     within '.answers' do
@@ -22,7 +22,7 @@ feature 'Create answer', %q{
 
   scenario 'Nonauthenticate user can not ask' do
     visit question_path(question)
-    fill_in 'Body', with:'ТекстОтвета'
+    fill_in 'Просто добавь ответ:', with:'ТекстОтвета'
     click_on 'Создать'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'

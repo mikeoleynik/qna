@@ -12,12 +12,14 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
+    @answer.save
+    redirect_to @answer.question
     
-    if @answer.save
-      redirect_to  @answer.question
-    else
-      render :new
-    end
+    # if @answer.save
+    #   redirect_to  @answer.question
+    # else
+    #   render :new
+    # end
   end
 
   def destroy

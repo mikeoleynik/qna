@@ -4,11 +4,9 @@ p = @question.body
 .answers
 = render 'answer'
 
-h4 Просто добавь ответ:
-
-= form_for [@question, @question.answers.build], remote: true do |f| 
+= form_for [@question, @answer], remote: true do |f| 
   
-  p= f.label :body
+  p= f.label :body, 'Просто добавь ответ:'
   p= f.text_area :body 
   p= f.submit 'Создать'
 
