@@ -14,8 +14,10 @@ feature 'Create answer', %q{
     visit question_path(question)
     fill_in 'Body', with:'ТекстОтвета'
     click_on 'Создать'
-
-    expect(page).to have_content 'ТекстОтвета'
+    
+    within '.answers' do
+      expect(page).to have_content 'ТекстОтвета'
+    end
   end
 
   scenario 'Nonauthenticate user can not ask' do

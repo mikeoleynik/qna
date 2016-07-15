@@ -1,0 +1,6 @@
+h3 Ответы
+
+- @question.answers.each do |answer| 
+  p = answer.body 
+  - if user_signed_in? && current_user.id == answer.user_id
+      = link_to 'Удалить', answer, method: :delete
