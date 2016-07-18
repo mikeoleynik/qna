@@ -5,10 +5,10 @@ feature 'Create answer', %q{
  As an authenticated user
 } do
 
-  let (:user) {create(:user)}
+  let(:user) {create(:user)}
   let(:question) { create(:question, user: user) }
   
-  scenario 'Authenticate user can ask' do
+  scenario 'Authenticate user can ask', js: true do
     sign_in(user)
     
     visit question_path(question)

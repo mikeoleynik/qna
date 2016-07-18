@@ -1,8 +1,10 @@
 h2 = @question.title
 p = @question.body
 
+
+h3 Ответы
 .answers
-= render 'answer'
+  = render 'answer'
 
 = form_for [@question, @answer], remote: true do |f| 
   
