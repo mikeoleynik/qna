@@ -31,7 +31,7 @@ describe AnswersController do
 
       it 'redirects to show view' do
         post :create, question_id: question.id, answer: attributes_for(:answer), format: :js
-        expect(response).to redirect_to question_path(question)
+        expect(response).to render_template :create
       end
     end
   end
