@@ -1,7 +1,18 @@
 h2 = @question.title
 p = @question.body
 
-= render 'answers/answer'
+
+h3 Ответы
+
+.answers
+  = render @question.answers
+
+= form_for [@question, @answer], remote: true do |f| 
+  
+  p= f.label :body, 'Просто добавь ответ:'
+  p= f.text_area :body 
+  p= f.submit 'Создать'
+
 
 = link_to 'Вопросы', questions_path
 br
