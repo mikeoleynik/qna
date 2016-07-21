@@ -1,5 +1,4 @@
-p= @answer.body                 
-
-p
--if user_signed_in? && current_user.author_of?(@answer)     
-  =link_to 'Удалить', @answer, method: :delete
+- if answer.persisted?
+  p= answer.body                 
+  - if user_signed_in? && current_user.author_of?(answer)     
+    p=link_to 'Удалить', answer, method: :delete

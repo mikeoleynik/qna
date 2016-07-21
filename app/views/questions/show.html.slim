@@ -5,12 +5,7 @@ p = @question.body
 h3 Ответы
 
 .answers
-  - @question.answers.each do |answer| 
-    p = answer.body 
-    - if user_signed_in? && current_user.id == answer.user_id
-      = link_to 'Удалить', answer, method: :delete
-
-= render 'answers/answer'
+  = render @question.answers
 
 = form_for [@question, @answer], remote: true do |f| 
   
