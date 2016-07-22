@@ -25,6 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'slim-rails'
 gem 'twitter-bootstrap-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -39,7 +40,9 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'selenium-webdriver', '~> 2.53', '>= 2.53.4'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'capybara-webkit', '~> 1.11', '>= 1.11.1'
   gem 'database_cleaner'
 end
 
@@ -54,6 +57,4 @@ end
 
 group :test do
   gem 'shoulda-matchers'
-  gem 'capybara'
-  gem 'launchy'
 end

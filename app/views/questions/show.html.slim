@@ -10,6 +10,7 @@ h3 Ответы
 = form_for [@question, @answer], remote: true do |f| 
   
   p= f.label :body, 'Просто добавь ответ:'
+  .answer-errors
   p= f.text_area :body 
   p= f.submit 'Создать'
 
