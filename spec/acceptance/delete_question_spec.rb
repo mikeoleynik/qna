@@ -10,7 +10,7 @@ feature 'Delete question', '
   let(:alien_question) { create(:question) }
 
 
-  scenario 'auth user try to delete his question' do
+  scenario 'auth user try to delete his question', js: true do
     sign_in(current_user)
     visit question_path(my_question)
     expect(page).to have_content my_question.body
