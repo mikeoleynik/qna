@@ -36,6 +36,32 @@ describe AnswersController do
     end
   end
 
+  describe 'PATCH #update' do
+
+    context 'with valid attributes' do
+      it 'assigns the requested answer to @answer' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'assigns the requested answer to @answer' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changed question attributes' do
+        patch :update, id: answer, question_id: question, answer: { body: 'new body' }, format: :js
+        question.reload
+        expect(answer.body).to eq 'new body'
+      end   
+
+      it 'redirect to the updated question' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(response).to render_template :update
+      end
+    end
+  end
+
 
   describe 'DELETE #destroy' do
     

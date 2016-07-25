@@ -1,4 +1,11 @@
 - if answer.persisted?
-  p= answer.body                 
-  - if user_signed_in? && current_user.author_of?(answer)     
-    p=link_to 'Удалить', answer, method: :delete
+  div class="answer-#{answer.id}"
+    p= answer.body           
+    - if user_signed_in? && current_user.author_of?(answer)     
+      p=link_to 'Удалить', answer, method: :delete, remote: true
+      p=link_to 'Редактировать', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+      p
+        =form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+          p=f.label :body, 'редакция'
+          p=f.text_area :body
+          p=f.submit 'Сохранить' 

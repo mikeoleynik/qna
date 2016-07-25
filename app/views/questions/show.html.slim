@@ -1,6 +1,11 @@
 h2 = @question.title
 p = @question.body
 
+br
+
+- if user_signed_in? && current_user.id == @question.user_id
+  = link_to 'Редактировать', edit_question_path
+  = link_to 'Удалить', question_path, method: :delete
 
 h3 Ответы
 
@@ -8,19 +13,10 @@ h3 Ответы
   = render @question.answers
 
 = form_for [@question, @answer], remote: true do |f| 
-  
-  p= f.label :body, 'Просто добавь ответ:'
+  p= f.label :body, 'Ответ'
   .answer-errors
-  p= f.text_area :body 
-  p= f.submit 'Создать'
+    p= f.text_area :body 
+    p= f.submit 'Создать'
 
 
 = link_to 'Вопросы', questions_path
-br
-= link_to 'Редактировать', edit_question_path
-
-- if user_signed_in? && current_user.id == @question.user_id
-  = link_to 'Удалить', question_path, method: :delete
-
-
-
