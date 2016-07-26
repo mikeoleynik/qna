@@ -1,11 +1,12 @@
-h2 = @question.title
-p = @question.body
+.question
+  h2 = @question.title
+  p = @question.body
 
-br
+  br
 
-- if user_signed_in? && current_user.id == @question.user_id
-  = link_to 'Редактировать', '', class: 'edit_question_link'
-  = link_to 'Удалить', question_path, method: :delete
+  - if user_signed_in? && current_user.id == @question.user_id
+    = link_to 'Редактировать', '', class: 'edit_question_link'
+    = link_to 'Удалить', question_path, method: :delete
 
 .edit_question_show
   = form_for @question, remote: true do |f|
@@ -29,5 +30,3 @@ h3 Ответы
       p= f.text_area :body 
       p= f.submit 'Создать'
 
-
-= link_to 'Вопросы', questions_path
