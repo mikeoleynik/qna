@@ -14,5 +14,3 @@ table class="table"
           td= link_to 'Показать', question_path(q)
           - if user_signed_in? && current_user.id == q.user_id
             td= link_to 'Удалить', question_path(q), method: :delete
-br
-p = link_to 'Создать вопрос', new_question_path

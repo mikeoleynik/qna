@@ -21,12 +21,13 @@ h3 Ответы
 
 .answers
   = render @question.answers
-
-= form_for [@question, @answer], remote: true do |f| 
-  p= f.label :body, 'Ответ'
-  .answer-errors
-    p= f.text_area :body 
-    p= f.submit 'Создать'
+  
+.new-answer
+  = form_for [@question, @answer], remote: true do |f| 
+    p= f.label :body, 'Ответ'
+    .answer-errors
+      p= f.text_area :body 
+      p= f.submit 'Создать'
 
 
 = link_to 'Вопросы', questions_path

@@ -3,5 +3,5 @@
     $('.answer-errors').html('<%= j message %>');
   <% end %>
 <% else %>
-  $('#answer_<%= @answer.id %>').remove();
+    $('<%= ".answer-#{@answer.id}" %>').fadeOut();
 <% end %>

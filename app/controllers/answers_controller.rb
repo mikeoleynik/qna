@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: [:create]
+  before_action :set_answer, only: [:update, :destroy]
 
   def new
     @answer = Answer.new
@@ -15,15 +16,12 @@ class AnswersController < ApplicationController
     @answer.save
   end
 
-  def update    
-    @answer = Answer.find(params[:id])
+  def update      
     @answer.update(answer_params)
     @question = @answer.question
   end
 
-  def destroy
-    @answer = Answer.find(params[:id])
-    
+  def destroy   
     if @answer.user_id == current_user.id
       @answer.destroy
       redirect_to  @answer.question
@@ -34,6 +32,10 @@ class AnswersController < ApplicationController
   end
 
   private
+    def set_answer
+      @answer = Answer.find(params[:id])
+    end
+
     def load_question
       @question = Question.find(params[:question_id])
     end
