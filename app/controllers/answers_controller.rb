@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: [:create]
-  before_action :set_answer, only: [:update, :destroy]
+  before_action :set_answer, only: [:update, :destroy, :best]
 
   def new
     @answer = Answer.new
@@ -28,6 +28,13 @@ class AnswersController < ApplicationController
     else
       flash[:notice] = 'No rights to delete'
       redirect_to root_url
+    end
+  end
+
+  def best
+    if current_user.author_of?(@answer.question)
+      @answer.best
+      flash[:notice] = 'You choose best answer'
     end
   end
 
