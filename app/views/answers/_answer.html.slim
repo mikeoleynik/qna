@@ -6,11 +6,10 @@
       br
       =link_to 'Редактировать', '', class: 'edit-answer-link', data: { answer_id: answer.id }
       p
-    - if user_signed_in? && current_user.author_of?(@question)
-      -if answer.best?
-        h6 = 'Этот ответ лучший'
-      -else
-        = link_to 'Лучший ответ', best_answer_path(answer), method: :patch, remote: true
+    - if answer.best?
+      b= 'Этот ответ лучший'
+    -elsif user_signed_in? && current_user.author_of?(@question)
+      = link_to 'Лучший ответ', best_answer_path(answer), method: :patch, remote: true
           
         =form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
           p=f.label :body, 'редакция'

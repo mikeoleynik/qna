@@ -9,7 +9,7 @@ feature 'Сhoose the best answer', %q{
   let!(:user) { create(:user) }
   let!(:question) { create(:question, user: user) }
   let!(:answer) { create(:answer, question: question, user: user) }
-  let!(:second_answer) { create(:answer, question: question, user: user) }
+  let(:second_answer) { create(:answer, question: question, user: user) }
 
   describe 'auth user' do
     before do
