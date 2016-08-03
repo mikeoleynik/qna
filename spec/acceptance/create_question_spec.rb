@@ -12,7 +12,7 @@ feature 'Create question', %q{
     sign_in(user)
 
     visit questions_path
-    click_on 'Создать вопрос'
+    click_on 'Новый'
     fill_in 'Заголовок', with: 'Test question'
     fill_in 'Вопрос', with: 'text'
     click_on 'Создать'
@@ -23,7 +23,7 @@ feature 'Create question', %q{
 
   scenario 'Non-auth user ties to create question' do
     visit questions_path
-    click_on 'Создать'
+    click_on 'Новый'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end

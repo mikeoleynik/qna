@@ -17,17 +17,21 @@ class AnswersController < ApplicationController
   end
 
   def update      
-    @answer.update(answer_params)
     @question = @answer.question
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+      flash[:notice] = 'Answer successfully edited'
+    else
+      flash[:alert] = 'Insufficient access rights'
+    end
   end
 
   def destroy   
-    if @answer.user_id == current_user.id
+    if current_user.author_of?(@answer)
       @answer.destroy
-      redirect_to  @answer.question
+      flash[:notice] = 'Your answer deleted.'
     else
-      flash[:notice] = 'No rights to delete'
-      redirect_to root_url
+      flash[:notice] = 'Insufficient access rights'
     end
   end
 

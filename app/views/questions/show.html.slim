@@ -1,22 +1,4 @@
-.question
-  h2 = @question.title
-  p = @question.body
-
-  br
-
-  - if user_signed_in? && current_user.id == @question.user_id
-    = link_to 'Редактировать', '', class: 'edit_question_link'
-    = link_to 'Удалить', question_path, method: :delete
-
-.edit_question_show
-  = form_for @question, remote: true do |f|
-    = f.label :title, 'Заголовок'
-    = f.text_field :title, class: "form-control"
-    br
-    = f.label :body, 'Ваш вопрос'
-    = f.text_area :body, class: "form-control"
-    br
-    = f.submit 'Save', class: 'btn btn-info active'  
+= render @question
 
 h3 Ответы
 

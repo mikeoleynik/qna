@@ -6,10 +6,10 @@ feature 'Сhoose the best answer', %q{
   In order to choose best answer
 } do
 
-  let(:user) { create(:user) }
-  let(:question) { create(:question, user: user) }
+  let!(:user) { create(:user) }
+  let!(:question) { create(:question, user: user) }
   let!(:answer) { create(:answer, question: question, user: user) }
-  let(:second_answer) { create(:answer , question: question, user: user) }
+  let!(:second_answer) { create(:answer, question: question, user: user) }
 
   describe 'auth user' do
     before do
@@ -22,8 +22,14 @@ feature 'Сhoose the best answer', %q{
       expect(page).to have_link 'Лучший ответ'
     end
 
-    scenario '' do
-      
+    scenario 'set best answer to his question', js: true do
+      visit question_path(question)
+
+      within '.answers' do
+        click_on 'Лучший ответ'
+      end
+
+      expect(page).to have_content 'Этот ответ лучший'
     end
   end
 

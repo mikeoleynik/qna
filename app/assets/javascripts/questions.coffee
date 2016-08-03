@@ -1,5 +1,5 @@
 $ ->
-  $('.edit_question_link').click (e) ->
+  $(document).on 'click', '.edit_question_link', (e) ->
     e.preventDefault();
-    $('.question').hide();
+    $('.question .content').hide();
     $('.edit_question_show').show()

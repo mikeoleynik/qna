@@ -49,9 +49,9 @@ describe AnswersController do
         expect(assigns(:question)).to eq question
       end
 
-      it 'changed question attributes' do
-        patch :update, id: answer, question_id: question, answer: { body: 'new body' }, format: :js
-        question.reload
+      it 'changed answer attributes' do
+        patch :update, question_id: question, id: answer, answer: { body: 'new body' }, format: :js
+        answer.reload
         expect(answer.body).to eq 'new body'
       end   
 
@@ -69,24 +69,45 @@ describe AnswersController do
       let(:answer) { create(:answer, question: question, user: @user) }
       
       it 'delete his answer' do
-        expect { delete :destroy, id: answer, question_id: question.id, user: @user }.to change(@user.answers, :count).by(-1)
+        expect{ delete :destroy, id: answer, question_id: question.id, user: @user, format: :js }.to change(@user.answers, :count).by(-1)
       end
 
       it 'do not delete not alias answer' do
-        expect { delete :destroy, id: answer, question_id: question.id }.to change(Answer, :count)
+        expect{ delete :destroy, id: answer, question_id: question.id, format: :js }.to change(Answer, :count)
       end
 
       it 'redirect to question page' do
-        delete :destroy, id: answer, question_id: question.id
-        expect(response).to redirect_to question_path(question)
+        delete :destroy, id: answer, question_id: question.id, format: :js
+        expect(response).to render_template :destroy
       end
     end
 
     context 'Non-authenticated user' do
       it 'do not delete any answer' do
-        expect { delete :destroy, id: answer, question_id: question.id }.to_not change(Answer, :count)
+        expect{ delete :destroy, id: answer, question_id: question.id, format: :js }.to_not change(Answer, :count)
       end
     end
   end
 
+  describe 'PATCH #best' do
+    login_user
+    
+    context 'answer owner' do
+
+      it 'assings the requested answer to @answer' do
+        patch :best, id: answer, question_id: question.id, format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'render best template' do
+        patch :best, id: answer, format: :js
+        expect(response).to render_template :best
+      end
+
+      it 'set best value to true' do
+        answer.reload
+        expect(answer.best).to eq true
+      end
+    end
+  end
 end

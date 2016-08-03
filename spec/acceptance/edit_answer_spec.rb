@@ -17,7 +17,7 @@ feature 'Edit answer', %q{
     expect(page).to_not have_link 'Редактировать'
   end
 
-  describe 'Authenticated user...' do
+  describe 'Authenticated user' do
     before do
       sign_in(user)
       visit question_path(question)
@@ -29,10 +29,10 @@ feature 'Edit answer', %q{
       end
     end
     
-    scenario 'try to edit his answer', js: true do
-      click_on 'Редактировать'
+    scenario 'try to edit his answer', js: true do   
       
       within ".answers" do
+        click_on 'Редактировать'
         fill_in 'Ответ', with: 'Ответуля'
         click_on 'Сохранить'
 
