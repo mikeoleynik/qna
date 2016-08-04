@@ -7,6 +7,7 @@ describe AnswersController do
   let!(:answer) { create(:answer, question: question, user: user) }
 
   describe 'GET #new' do
+    login_user
     before { get :new, question_id: question.id }
 
     it 'assigns a new Answer to @answer' do
@@ -19,6 +20,8 @@ describe AnswersController do
   end
 
   describe 'POST #create' do
+    login_user
+
     context 'with valid attributes' do
       
       it 'save the new answer in the database' do
@@ -37,6 +40,7 @@ describe AnswersController do
   end
 
   describe 'PATCH #update' do
+    login_user
 
     context 'with valid attributes' do
       it 'assigns the requested answer to @answer' do
@@ -50,7 +54,7 @@ describe AnswersController do
       end
 
       it 'changed answer attributes' do
-        patch :update, question_id: question, id: answer, answer: { body: 'new body' }, format: :js
+        patch :update, id: answer, question_id: question, answer: { body: 'new body'}, format: :js
         answer.reload
         expect(answer.body).to eq 'new body'
       end   
@@ -64,7 +68,7 @@ describe AnswersController do
 
 
   describe 'DELETE #destroy' do
-    
+
     context 'Authenticated user' do
       let(:answer) { create(:answer, question: question, user: @user) }
       
@@ -104,9 +108,10 @@ describe AnswersController do
         expect(response).to render_template :best
       end
 
-      it 'set best value to true' do
+      it "doesn't set best answer for foreign question" do
+        patch :best, id: answer, format: :js
         answer.reload
-        expect(answer.best).to eq true
+        expect(answer.best).to eq false
       end
     end
   end

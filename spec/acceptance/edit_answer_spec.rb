@@ -43,7 +43,7 @@ feature 'Edit answer', %q{
     end
   end
 
-  scenario 'Authenticated user try to edit alien answer' do
+  scenario 'try to edit alien answer' do
     sign_in(other_user)
     visit question_path(question)
 

@@ -11,10 +11,10 @@
           .answer-errors
           p=f.text_area :body
           p=f.submit 'Сохранить' 
-          
-    - if answer.best?
-      b= 'Этот ответ лучший'
-    - elsif user_signed_in? && current_user.author_of?(answer.question)
-      = link_to 'Лучший ответ', best_answer_path(answer), method: :patch, remote: true
+
+      - if answer.best?
+        b= 'Этот ответ лучший'
+      - else user_signed_in? && current_user.author_of?(@answer.question)
+        = link_to 'Лучший ответ', best_answer_path(answer), method: :patch, remote: true
           
 
