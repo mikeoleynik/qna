@@ -6,7 +6,7 @@
     p Attachment
     ul
       - @question.attachments.each do |a|
-        li= link_to a.file.file.filename, a.file.url
+        li= link_to a.file.identifier, a.file.url
 
     br
 
