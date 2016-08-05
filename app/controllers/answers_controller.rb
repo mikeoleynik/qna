@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: [:create]
+  before_action :set_answer, only: [:update, :destroy, :best]
 
   def new
     @answer = Answer.new
@@ -13,33 +14,40 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
-    # redirect_to @answer.question
-    
-    # if @answer.save
-    #   redirect_to  @answer.question
-    # else
-    #   render :new
-    # end
   end
 
-  def destroy
+  def update      
     @answer = Answer.find(params[:id])
-    
-    if @answer.user_id == current_user.id
+    @answer.update(answer_params)
+    @question = @answer.question
+  end
+
+
+
+  def destroy   
+    if current_user.author_of?(@answer)
       @answer.destroy
-      redirect_to  @answer.question
+      flash[:notice] = 'Your answer deleted.'
     else
-      flash[:notice] = 'No rights to delete'
-      redirect_to root_url
+      flash[:notice] = 'Insufficient access rights'
     end
   end
 
+  def best
+    @answer.set_best if current_user.author_of?(@answer.question)
+    @answers = @answer.question.answers
+  end
+
   private
+    def set_answer
+      @answer = Answer.find(params[:id])
+    end
+
     def load_question
       @question = Question.find(params[:question_id])
     end
 
     def answer_params
-      params.require(:answer).permit(:body)
+      params.require(:answer).permit(:body, :best)
     end
 end

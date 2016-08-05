@@ -1,4 +1,20 @@
 - if answer.persisted?
-  p= answer.body                 
-  - if user_signed_in? && current_user.author_of?(answer)     
-    p=link_to 'Удалить', answer, method: :delete
+  div class="answer-#{answer.id}" class=('best-answer' if answer.best?)
+    p= answer.body           
+    - if user_signed_in? && current_user.author_of?(answer)     
+      =link_to 'УдалитьОтвет', answer, method: :delete, remote: true
+      br
+      =link_to 'Редактировать', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+      p
+        =form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+          p=f.label :body, 'редакция'
+          .answer-errors
+          p=f.text_area :body
+          p=f.submit 'Сохранить' 
+
+      - if answer.best?
+        b= 'Этот ответ лучший'
+      - else user_signed_in? && current_user.author_of?(@answer.question)
+        = link_to 'Лучший ответ', best_answer_path(answer), method: :patch, remote: true
+          
+

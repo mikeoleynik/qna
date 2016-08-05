@@ -7,6 +7,7 @@ describe AnswersController do
   let!(:answer) { create(:answer, question: question, user: user) }
 
   describe 'GET #new' do
+    login_user
     before { get :new, question_id: question.id }
 
     it 'assigns a new Answer to @answer' do
@@ -19,6 +20,8 @@ describe AnswersController do
   end
 
   describe 'POST #create' do
+    login_user
+
     context 'with valid attributes' do
       
       it 'save the new answer in the database' do
@@ -36,31 +39,80 @@ describe AnswersController do
     end
   end
 
+  describe 'PATCH #update' do
+    login_user
+
+    context 'with valid attributes' do
+      it 'assigns the requested answer to @answer' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'assigns the requested answer to @answer' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changed answer attributes' do
+        patch :update, id: answer, question_id: question, answer: { body: 'new body'}, format: :js
+        answer.reload
+        expect(answer.body).to eq 'new body'
+      end   
+
+      it 'redirect to the updated question' do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+        expect(response).to render_template :update
+      end
+    end
+  end
+
 
   describe 'DELETE #destroy' do
-    
+
     context 'Authenticated user' do
       let(:answer) { create(:answer, question: question, user: @user) }
       
       it 'delete his answer' do
-        expect { delete :destroy, id: answer, question_id: question.id, user: @user }.to change(@user.answers, :count).by(-1)
+        expect{ delete :destroy, id: answer, question_id: question.id, user: @user, format: :js }.to change(@user.answers, :count).by(-1)
       end
 
       it 'do not delete not alias answer' do
-        expect { delete :destroy, id: answer, question_id: question.id }.to change(Answer, :count)
+        expect{ delete :destroy, id: answer, question_id: question.id, format: :js }.to change(Answer, :count)
       end
 
       it 'redirect to question page' do
-        delete :destroy, id: answer, question_id: question.id
-        expect(response).to redirect_to question_path(question)
+        delete :destroy, id: answer, question_id: question.id, format: :js
+        expect(response).to render_template :destroy
       end
     end
 
     context 'Non-authenticated user' do
       it 'do not delete any answer' do
-        expect { delete :destroy, id: answer, question_id: question.id }.to_not change(Answer, :count)
+        expect{ delete :destroy, id: answer, question_id: question.id, format: :js }.to_not change(Answer, :count)
       end
     end
   end
 
+  describe 'PATCH #best' do
+    login_user
+    
+    context 'answer owner' do
+
+      it 'assings the requested answer to @answer' do
+        patch :best, id: answer, question_id: question.id, format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'render best template' do
+        patch :best, id: answer, format: :js
+        expect(response).to render_template :best
+      end
+
+      it "doesn't set best answer for foreign question" do
+        patch :best, id: answer, format: :js
+        answer.reload
+        expect(answer.best).to eq false
+      end
+    end
+  end
 end

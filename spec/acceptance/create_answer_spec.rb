@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Create answer', %q{
  In order to answer the questions
@@ -12,7 +12,7 @@ feature 'Create answer', %q{
     sign_in(user)
     
     visit question_path(question)
-    fill_in 'Просто добавь ответ:', with:'ТекстОтвета'
+    fill_in 'Ответ', with:'ТекстОтвета'
     click_on 'Создать'
     
     within '.answers' do
@@ -22,9 +22,18 @@ feature 'Create answer', %q{
 
   scenario 'Nonauthenticate user can not ask' do
     visit question_path(question)
-    fill_in 'Просто добавь ответ:', with:'ТекстОтвета'
+    fill_in 'Ответ', with:'ТекстОтвета'
     click_on 'Создать'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
+  end
+
+  scenario 'User try to create invalid answer', js: true do
+    sign_in(user)
+
+    visit question_path(question)
+    click_on 'Создать'
+
+    expect(page).to have_content "can't be blank"
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe QuestionsController do
   login_user
-  let(:question) { create(:question) }
+  let(:question) { create(:question, user: @user) }
 
   
   describe 'GET #index' do
@@ -95,25 +95,25 @@ describe QuestionsController do
 
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
-        patch :update, id: question, question: attributes_for(:question)
+        patch :update, id: question, question: attributes_for(:question), format: :js
         expect(assigns(:question)).to eq question
       end
 
       it 'changed question attributes' do
-        patch :update, id: question, question: { title: 'new title', body: 'new body' }
+        patch :update, id: question, question: { title: 'new title', body: 'new body' }, format: :js
         question.reload
         expect(question.title).to eq 'new title'
         expect(question.body).to eq 'new body'
       end   
 
       it 'redirect to the updated question' do
-        patch :update, id: question, question: attributes_for(:question)
-        expect(response).to redirect_to question
+        patch :update, id: question, question: attributes_for(:question), format: :js
+        expect(response).to render_template :update
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, id: question, question: { title: nil, body: 'new body' } }
+      before { patch :update, id: question, question: { title: nil, body: 'new body' }, format: :js }
 
       it 'does not save the question' do
         question.reload
@@ -122,7 +122,7 @@ describe QuestionsController do
       end   
 
       it 're-renders edit view' do
-        expect(response).to render_template :edit
+        expect(response).to render_template :update
       end
     end
   end
