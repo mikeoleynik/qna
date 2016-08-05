@@ -8,4 +8,11 @@
   br
   = f.text_area :body, class: "form-control", placeholder: "Вопрос"
   br
+
+  p Attachment:
+  p
+    = f.fields_for :attachments |a|
+      = a.label :file
+      = a.file_field :file
+
   = f.submit 'Создать', class: 'btn btn-info active'
