@@ -3,6 +3,11 @@
     h2 = @question.title
     p = @question.body
 
+    p Attachment
+    ul
+      - @question.attachments.each do |a|
+        li= link_to a.file.file.filename, a.file.url
+
     br
 
     - if user_signed_in? && current_user.id == @question.user_id
