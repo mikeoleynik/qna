@@ -48,6 +48,7 @@ feature 'Add files to answer', %q{
     
     sign_in(another_user)   
     visit question_path(question)
+    
     within ".answers" do
       expect(page).to_not have_content "удалитьфайл"
     end
