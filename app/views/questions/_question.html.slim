@@ -14,7 +14,7 @@
 
     br
 
-    - if user_signed_in? && current_user.id == @question.user_id
+    - if user_signed_in? && current_user.author_of?(question)
       = link_to 'Редактировать', '', class: 'edit_question_link'
       = link_to 'Удалить', question_path, method: :delete
 
