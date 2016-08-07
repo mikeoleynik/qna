@@ -8,9 +8,9 @@
       - @question.attachments.each do |a|
         li id="attachment-id-#{a.id}"
           = link_to a.file.identifier, a.file.url
-          - user_signed_in? && current_user.author_of?(question)
-          br
-          = link_to 'удалить', attachment_path(a), method: :delete, remote: true
+          - if user_signed_in? && current_user.author_of?(question)
+            br
+            = link_to 'удалить', attachment_path(a), method: :delete, remote: true
 
     br
 
