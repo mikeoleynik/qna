@@ -1,6 +1,14 @@
 - if answer.persisted?
   div class="answer-#{answer.id}" class=('best-answer' if answer.best?)
-    p= answer.body           
+    p= answer.body
+    ul
+      - answer.attachments.each do |a|
+        li id="attachment-id-#{a.id}"
+          = link_to a.file.identifier, a.file.url
+          - if user_signed_in? && current_user.author_of?(answer)
+            br
+            = link_to 'удалитьфайл', attachment_path(a), method: :delete, remote: true
+                   
     - if user_signed_in? && current_user.author_of?(answer)     
       =link_to 'УдалитьОтвет', answer, method: :delete, remote: true
       br

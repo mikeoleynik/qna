@@ -24,9 +24,6 @@ class AnswersController < ApplicationController
   def destroy   
     if current_user.author_of?(@answer)
       @answer.destroy
-      flash[:notice] = 'Your answer deleted.'
-    else
-      flash[:notice] = 'Insufficient access rights'
     end
   end
 
@@ -45,6 +42,6 @@ class AnswersController < ApplicationController
     end
 
     def answer_params
-      params.require(:answer).permit(:body, :best)
+      params.require(:answer).permit(:body, :best, attachments_attributes: [:file, :id, :_delete])
     end
 end
