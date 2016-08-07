@@ -12,7 +12,7 @@
   p Attachment:
   p
     = f.fields_for :attachments do |a|
-      = a.label :file
-      = a.file_field :file
+      = render 'attachments/attachments_fields', f: a
+      = link_to_add_association 'Добавить', f, :attachments, partial: 'attachments/attachments_fields'
 
   = f.submit 'Создать', class: 'btn btn-info active'

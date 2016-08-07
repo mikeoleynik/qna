@@ -15,13 +15,17 @@ feature 'Add files to answer', %q{
   end
 
   scenario 'User adds file when answer', js: true do
-    fill_in 'Ответ', with:'ТекстОтвета'
-    attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+    fill_in 'Ответ', with: 'text body answer'
+    click_on 'Добавить'
+    all('input[type="file"]')[0].set("#{Rails.root}/spec/spec_helper.rb")
+    click_on 'Добавить'
+    all('input[type="file"]')[1].set("#{Rails.root}/spec/rails_helper.rb")
     click_on 'Создать'
 
     within '.answers' do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
-    end 
+      expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/2/rails_helper.rb'
+    end
   end
 
 end
