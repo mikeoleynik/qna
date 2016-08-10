@@ -3,9 +3,17 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :attachments, only: [:destroy]
+
+  concern :votable do
+    resources :votes, only: [:up, :down, :unvote] do
+      post :up, on: :collection
+      post :down, on: :collection
+      post :unvote, on: :collection
+    end
+  end
   
-  resources :questions do
-    resources :answers, shallow: true do
+  resources :questions, concerns: :votable do
+    resources :answers, concerns: :votable, shallow: true do
       patch :best, on: :member
     end
   end
