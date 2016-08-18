@@ -1,12 +1,13 @@
 class Answer < ActiveRecord::Base
+  include Attachable
+  include Votable
+  
   belongs_to :user
   belongs_to :question
-  has_many :attachments, as: :attachable
-
+  has_many :votes, as: :votable
+  
   validates :body, :question_id, :user_id, presence: true
 
-  accepts_nested_attributes_for :attachments, reject_if: :all_blank
-  
   default_scope { order(best: :desc) }
 
   def set_best

@@ -1,6 +1,8 @@
 - if answer.persisted?
   div class="answer-#{answer.id}" class=('best-answer' if answer.best?)
     p= answer.body
+    = render partial: 'votes/vote', locals: {votable: answer, type: "answer"}
+    br
     ul
       - answer.attachments.each do |a|
         li id="attachment-id-#{a.id}"

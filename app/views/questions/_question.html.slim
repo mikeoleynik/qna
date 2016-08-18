@@ -2,6 +2,7 @@
   .content
     h2 = @question.title
     p = @question.body
+    = render partial: 'votes/vote', locals: {votable: @question, type: "question"}
 
     p Attachment
     ul

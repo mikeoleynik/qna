@@ -6,6 +6,7 @@ RSpec.describe Answer, type: :model do
   it { should validate_presence_of :question_id }
   it { should have_db_index :question_id }
   it { should have_many :attachments }
+  it { should have_many :votes }
 
   it { should accept_nested_attributes_for :attachments }
 end
