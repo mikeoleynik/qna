@@ -1,9 +1,10 @@
 = render @question
 
 h3 Ответы
-
-.answers
+/ data={question_id: "#{@question.id}"}
+.answers 
   = render @question.answers
+
   
 .new-answer
   = form_for [@question, @answer], remote: true do |f| 
@@ -15,4 +16,4 @@ h3 Ответы
       	= link_to_add_association 'Добавить', f, :attachments, partial: 'attachments/attachments_fields'
       p= f.submit 'Создать'
 
-= subscribe_to '/questions/#{questions.id}/answers'
+= subscribe_to "/questions/#{@question.id}/answers"

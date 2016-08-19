@@ -34,11 +34,6 @@ class VotesController < ApplicationController
     end
 
     def load_votable
-      # if @votable == params[:question_id] 
-      #   controller_name.singularize.classify.constantize.find(params[:question_id]) 
-      # else
-      #   controller_name.singularize.classify.constantize.find(params[:answer_id])
-      # end
       parent = params.detect { |k, v| k.to_s =~ /_id/ }
       klass_name = parent.first.to_s.gsub('_id', '')
       klass = klass_name.classify.constantize

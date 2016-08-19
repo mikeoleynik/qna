@@ -13,7 +13,20 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    @answer.save
+
+    respond_to do |format|
+      if @answer.save
+        format.js #do
+        #   PrivatePub.publish_to "/questions/#{@question.id}/answers", answer: @answer.to_json
+        #   render nothing: true
+        # end
+      else
+        format.js #do
+        #   PrivatePub.publish_to "/questions/#{@question.id}/answers", errors: @answer.errors.full_messages
+        #   render nothing: true
+        # end
+      end
+    end
   end
 
   def update      
