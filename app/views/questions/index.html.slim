@@ -1,16 +1,9 @@
 h3.text-center Вопросы
+.questions
+  - @questions.each do |q|
+    p = q.title
+    = link_to 'Показать', question_path(q)
+    - if user_signed_in? && current_user.id == q.user_id
+        p = link_to 'Удалить', question_path(q), method: :delete
 
-table class="table"
-  thead
-    tr
-      th
-      th 
-      th
-      th
-  tbody
-    - @questions.each do |q|
-        tr
-          td= q.title
-          td= link_to 'Показать', question_path(q)
-          - if user_signed_in? && current_user.id == q.user_id
-            td= link_to 'Удалить', question_path(q), method: :delete
+= subscribe_to "/questions"

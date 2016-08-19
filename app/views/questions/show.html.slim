@@ -1,10 +1,9 @@
 = render @question
 
 h3 Ответы
-/ data={question_id: "#{@question.id}"}
+
 .answers 
   = render @question.answers
-
   
 .new-answer
   = form_for [@question, @answer], remote: true do |f| 

@@ -16,15 +16,9 @@ class AnswersController < ApplicationController
 
     respond_to do |format|
       if @answer.save
-        format.js #do
-        #   PrivatePub.publish_to "/questions/#{@question.id}/answers", answer: @answer.to_json
-        #   render nothing: true
-        # end
+        format.js 
       else
-        format.js #do
-        #   PrivatePub.publish_to "/questions/#{@question.id}/answers", errors: @answer.errors.full_messages
-        #   render nothing: true
-        # end
+        format.js 
       end
     end
   end
