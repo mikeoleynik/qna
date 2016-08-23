@@ -1,8 +1,11 @@
 <% if @answer.errors.present? %>
   <% @answer.errors.full_messages.each do |message| %>
     $('.answer-errors').html('<%= j message %>');
-	<% end %>
+  <% end %>
 <% else %>
-  $('.answers').append('<%= j render @answer %>');
+  <% publish_to "/questions/#{@question.id}/answers" do %>
+    $('.answers').append('<%= j render @answer %>');
+  <% end %>
+  
   $('.new-answer #answer_body').val('');
 <% end %>

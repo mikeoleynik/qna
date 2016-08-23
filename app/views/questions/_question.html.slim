@@ -1,4 +1,4 @@
-.question
+.question id = "question-#{@question.id}"
   .content
     h2 = @question.title
     p = @question.body
@@ -18,6 +18,16 @@
     - if user_signed_in? && current_user.author_of?(question)
       = link_to 'Редактировать', '', class: 'edit_question_link'
       = link_to 'Удалить', question_path, method: :delete
+
+  .comments
+    - @question.comments.each do |c|
+      = render partial: 'comments/comment', locals: {comment: c}
+    = link_to 'Add comment','', class: 'create-comment-link', data: { commentable_id: @question.id }
+    
+    = form_for [ @question, @question.comments.build ], method: "post", remote: true, html: { id: "create-comment-#{@question.id}"} do |f|
+      = f.label :comment_body, "Comment"
+      = f.text_area :comment_body
+      = f.submit 'Create'
 
   .edit_question_show
     = form_for @question, remote: true do |f|

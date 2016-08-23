@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :votes
+  has_many :comments, dependent: :destroy
 
   def author_of?(unit)
     id == unit.user_id
