@@ -7,22 +7,14 @@ class AnswersController < ApplicationController
 
   def new
     @answer = Answer.new
+    respond_with @answer
   end
 
   def show    
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-
-    respond_to do |format|
-      if @answer.save
-        format.js 
-      else
-        format.js 
-      end
-    end
+    respond_with (@answer = @question.answers.create(answer_params.merge({ user: current_user })))
   end
 
   def update      
@@ -30,9 +22,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy   
-    if current_user.author_of?(@answer)
-      @answer.destroy
-    end
+    respond_with(@answer.destroy) if current_user.author_of?(@answer)
   end
 
   def best

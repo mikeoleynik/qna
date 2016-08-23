@@ -1,6 +1,4 @@
 class VotesController < ApplicationController
-  #include Votable
-
   before_action :authenticate_user!
   before_action :load_votable
   before_action :author_votable, only: [:up, :down]
