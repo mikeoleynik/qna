@@ -3,6 +3,8 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:create]
   before_action :set_answer, only: [:update, :destroy, :best]
 
+  respond_to :js
+
   def new
     @answer = Answer.new
   end
@@ -24,8 +26,7 @@ class AnswersController < ApplicationController
   end
 
   def update      
-    @answer.update(answer_params)
-    @question = @answer.question
+    respond_with(@answer.update(answer_params))  
   end
 
   def destroy   
@@ -42,6 +43,7 @@ class AnswersController < ApplicationController
   private
     def set_answer
       @answer = Answer.find(params[:id])
+      @question = @answer.question
     end
 
     def load_question

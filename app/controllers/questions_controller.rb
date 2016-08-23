@@ -2,18 +2,23 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
   
+
+  respond_to :json, :js
+  
   def index
-    @questions = Question.all
+    respond_with (@questions = Question.all)
   end
 
   def show
     @answer = @question.answers.build
-    @answer.attachments.build 
+    @answer.attachments.build
+    respond_with @question 
   end
 
   def new
     @question = Question.new
-    @question.attachments.build 
+    @question.attachments.build
+    respond_with @question 
   end
 
   def edit    
@@ -34,16 +39,13 @@ class QuestionsController < ApplicationController
   def update
     if current_user.author_of?(@question)
       @question.update(question_params)
-    end
+      respond_with @question
+    end   
   end
 
   def destroy
     if @question.user_id == current_user.id
-      @question.destroy
-      redirect_to questions_path
-    else
-      flash[:notice] = 'No rights to delete'
-      redirect_to questions_path
+      respond_with(@question.destroy)
     end
   end
 
