@@ -3,35 +3,26 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:create]
   before_action :set_answer, only: [:update, :destroy, :best]
 
+  respond_to :js
+
   def new
     @answer = Answer.new
+    respond_with @answer
   end
 
   def show    
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-
-    respond_to do |format|
-      if @answer.save
-        format.js 
-      else
-        format.js 
-      end
-    end
+    respond_with (@answer = @question.answers.create(answer_params.merge({ user: current_user })))
   end
 
   def update      
-    @answer.update(answer_params)
-    @question = @answer.question
+    respond_with(@answer.update(answer_params))  
   end
 
   def destroy   
-    if current_user.author_of?(@answer)
-      @answer.destroy
-    end
+    respond_with(@answer.destroy) if current_user.author_of?(@answer)
   end
 
   def best
@@ -42,6 +33,7 @@ class AnswersController < ApplicationController
   private
     def set_answer
       @answer = Answer.find(params[:id])
+      @question = @answer.question
     end
 
     def load_question

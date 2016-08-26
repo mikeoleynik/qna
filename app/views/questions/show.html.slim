@@ -10,7 +10,7 @@ h3 Ответы
     p= f.label :body, 'Ответ'
     .answer-errors
       p= f.text_area :body 
-      p= f.fields_for :attachments do |a|
+      p= f.fields_for :attachments, @answer.attachments.build do |a|
         = render 'attachments/attachments_fields', f: a
         = link_to_add_association 'Добавить', f, :attachments, partial: 'attachments/attachments_fields'
       p= f.submit 'Создать'
