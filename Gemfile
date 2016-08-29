@@ -33,6 +33,8 @@ gem 'thin'
 gem 'responders', '~> 2.0'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'letter_opener'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
