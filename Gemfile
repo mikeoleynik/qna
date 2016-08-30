@@ -54,6 +54,7 @@ group :development, :test do
   gem 'launchy'
   gem 'capybara-webkit', '~> 1.11', '>= 1.11.1'
   gem 'database_cleaner'
+  gem 'capybara-email'
 end
 
 group :development do

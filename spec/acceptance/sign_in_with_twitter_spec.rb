@@ -6,16 +6,21 @@ feature 'Sign in with Twitter' do
   scenario 'user can sign in with his Twitter account' do
     expect(page).to have_content('Sign in with Twitter')
 
-    click_on 'Sign in with Twitter'
     mock_auth_hash(:twitter)
-    OmniAuth.config.add_mock(:twitter, { info: { email: nil } })  
-
+    OmniAuth.config.add_mock(:twitter, { info: { email: nil } }) 
+    click_on 'Sign in with Twitter'
+ 
     expect(page).to have_content 'Пожалуйста введите свой e-mail'
     fill_in 'email', with: 'user_example@example.com'
     click_on 'Send'
 
-    expect(page).to have_content I18n.t('devise.omniauth_callbacks.success', kind: 'Twitter')
-    expect(current_path).to eq root_path
+    open_email('user_example@example.com')
+    expect(current_email).to have_content "You can confirm your account email through the link below:"
+    current_email.click_link 'Confirm my account'
+    expect(page).to have_content 'Your email address has been successfully confirmed.'
+    
+    click_on 'Sign in with Twitter'
+    expect(page).to have_content 'Successfully authenticated from Twitter account.'
   end
 
   scenario 'authentication error' do
