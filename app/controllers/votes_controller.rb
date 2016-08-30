@@ -5,6 +5,8 @@ class VotesController < ApplicationController
 
   respond_to :json
 
+  authorize_resource
+
   def up
     vote(1)
   end

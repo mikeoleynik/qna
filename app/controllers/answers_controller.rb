@@ -5,6 +5,8 @@ class AnswersController < ApplicationController
 
   respond_to :js
 
+  authorize_resource
+
   def new
     @answer = Answer.new
     respond_with @answer
@@ -22,11 +24,11 @@ class AnswersController < ApplicationController
   end
 
   def destroy   
-    respond_with(@answer.destroy) if current_user.author_of?(@answer)
+    respond_with(@answer.destroy)# if current_user.author_of?(@answer)
   end
 
   def best
-    @answer.set_best if current_user.author_of?(@answer.question)
+    @answer.set_best #if current_user.author_of?(@answer.question)
     @answers = @answer.question.answers
   end
 

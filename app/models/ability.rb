@@ -23,7 +23,23 @@ class Ability
 
   def user_abilities
     quest_abilities
-    can :create, [Question, Answer, Comment]
-    can :update, [Question, Answer, Comment], user: user
+
+    alias_action  :create, :edit, :update, :destroy, to: :crud
+    can :crud, [Question, Answer], user: user
+    can :create, Comment
+
+    can :best, Answer do |answer|
+      answer.question.user_id == user.id && answer.user_id != user.id
+    end
+
+    can :manage, Attachment do |attachment|
+      attachment.attachable.user_id == user.id
+    end
+
+     can [:up, :down], Vote do |vote|
+      vote.votable.user_id != user.id
+    end
+
+    can :unvote, Vote, user: user
   end
 end

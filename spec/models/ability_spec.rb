@@ -25,19 +25,53 @@ RSpec.describe Ability do
     let(:question) { create :question }
 
     it {should_not be_able_to :manage, :all }
-    it {should be_able_to :read, :all }
+    it {should be_able_to :read, :all }  
 
-    it {should be_able_to :create, Question }
-    it {should be_able_to :create, Answer }
-    it {should be_able_to :create, Comment }
+    context 'Question' do
+      it {should be_able_to :create, Question }
 
-    it {should be_able_to :update, create(:question, user: user), user: user }
-    it {should_not be_able_to :update, create(:question, user: other), user: user }
+      it {should be_able_to :update, create(:question, user: user), user: user }
+      it {should_not be_able_to :update, create(:question, user: other), user: user }
 
-    it {should be_able_to :update, create(:answer, question: question, user: user), user: user }
-    it {should_not be_able_to :update, create(:answer, question: question, user: other), user: user }
+      it { should be_able_to :destroy, create(:question, user: user), user: user }
+      it { should_not be_able_to :destroy, create(:question, user: other), user: user }
+    end
 
-    it {should be_able_to :update, create(:comment, user: user), user: user }
-    it {should_not be_able_to :update, create(:comment, user: other), user: user }
+    context 'Answer' do
+      it {should be_able_to :create, Answer }
+
+      it {should be_able_to :update, create(:answer, question: question, user: user), user: user }
+      it {should_not be_able_to :update, create(:answer, question: question, user: other), user: user }
+
+      it { should be_able_to :destroy, create(:answer, question: question, user: user), user: user }
+      it { should_not be_able_to :destroy, create(:answer, question: question, user: other), user: user }
+    end        
+
+    context 'Comment' do
+      it {should be_able_to :create, Comment }
+    end    
+
+    context 'vote' do
+      it { should be_able_to :unvote, Vote }
+      it { should be_able_to :up, Vote }
+      it { should be_able_to :down, Vote }
+    end
+
+    context "attachment" do
+      let(:attachment) { create(:attachment, attachable: question) }
+      let(:question_two) { create(:question, user: other) }
+      let(:attach) { create(:attachment, attachable: question_two) }
+
+      it { should be_able_to :manage, attachment, user: user  }
+      it { should_not be_able_to :manage, attach, user: user }
+    end
+
+    context 'best' do
+      let(:answer) { create(:answer, user: user) }
+      let(:other_question) { create(:question, user: other) }
+
+      it { should be_able_to :best, create(:answer, question: question, user: user), user: user }
+      it { should_not be_able_to :best, create(:answer, question: question, user: other), user: other }
+    end    
   end
 end
