@@ -31,6 +31,10 @@ gem 'cocoon'
 gem 'private_pub'
 gem 'thin'
 gem 'responders', '~> 2.0'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'letter_opener'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -50,6 +54,7 @@ group :development, :test do
   gem 'launchy'
   gem 'capybara-webkit', '~> 1.11', '>= 1.11.1'
   gem 'database_cleaner'
+  gem 'capybara-email'
 end
 
 group :development do
