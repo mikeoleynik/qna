@@ -28,15 +28,13 @@ class Ability
     can :crud, [Question, Answer], user: user
     can :create, Comment
 
-    can :best, Answer do |answer|
-      answer.question.user_id == user.id && answer.user_id != user.id
-    end
+    can :best, Answer, question: { user: user }
 
     can :manage, Attachment do |attachment|
       attachment.attachable.user_id == user.id
     end
 
-     can [:up, :down], Vote do |vote|
+    can [:up, :down], Vote do |vote|
       vote.votable.user_id != user.id
     end
 

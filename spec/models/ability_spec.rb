@@ -58,20 +58,21 @@ RSpec.describe Ability do
     end
 
     context "attachment" do
+      let(:question) { create(:question, user: user) }
       let(:attachment) { create(:attachment, attachable: question) }
+
       let(:question_two) { create(:question, user: other) }
       let(:attach) { create(:attachment, attachable: question_two) }
 
-      it { should be_able_to :manage, attachment, user: user  }
+      it { should be_able_to :manage, attachment,user: user  }
       it { should_not be_able_to :manage, attach, user: user }
     end
 
     context 'best' do
-      let(:answer) { create(:answer, user: user) }
-      let(:other_question) { create(:question, user: other) }
-
-      it { should be_able_to :best, create(:answer, question: question, user: user), user: user }
-      it { should_not be_able_to :best, create(:answer, question: question, user: other), user: other }
+      let(:answer) { create :answer, question: question, user: user }
+      
+      it { should be_able_to :best, answer, user: user }
+      it { should_not be_able_to :best, answer, user: user }
     end    
   end
 end

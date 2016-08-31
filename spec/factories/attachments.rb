@@ -1,5 +1,7 @@
+include ActionDispatch::TestProcess
+
 FactoryGirl.define do
   factory :attachment do
-    file "MyString"
+    file { fixture_file_upload("#{Rails.root}/spec/rails_helper.rb") }
   end
 end

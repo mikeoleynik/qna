@@ -24,11 +24,11 @@ class AnswersController < ApplicationController
   end
 
   def destroy   
-    respond_with(@answer.destroy)# if current_user.author_of?(@answer)
+    respond_with(@answer.destroy)
   end
 
   def best
-    @answer.set_best #if current_user.author_of?(@answer.question)
+    @answer.set_best #if current_user.author_of?(@question)
     @answers = @answer.question.answers
   end
 

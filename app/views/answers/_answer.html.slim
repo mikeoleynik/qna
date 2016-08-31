@@ -25,7 +25,7 @@
 
         - if answer.best?
           b= 'Этот ответ лучший'
-        - else user_signed_in? && current_user.author_of?(@answer.question)
+        - else can?(:best, answer)
           = link_to 'Лучший ответ', best_answer_path(answer), method: :patch, remote: true
 
       .comments
