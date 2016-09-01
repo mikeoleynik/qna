@@ -22,7 +22,8 @@ RSpec.describe Ability do
   describe 'for user' do
     let(:user) { create :user }
     let(:other) { create :user }
-    let(:question) { create :question }
+    let(:question) { create :question, user: user }
+    let(:other_question) { create :question, user: other }
 
     it {should_not be_able_to :manage, :all }
     it {should be_able_to :read, :all }  
@@ -70,9 +71,10 @@ RSpec.describe Ability do
 
     context 'best' do
       let(:answer) { create :answer, question: question, user: user }
+      let(:other_answer) { create :answer, question: other_question, user: other }
       
       it { should be_able_to :best, answer, user: user }
-      it { should_not be_able_to :best, answer, user: user }
+      it { should_not be_able_to :best, other_answer, user: other }
     end    
   end
 end
