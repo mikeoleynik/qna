@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
   after_action :publish_question, only: [:create]
 
   respond_to :json, :js
+
+  authorize_resource
   
   def index
     respond_with (@questions = Question.all)
@@ -26,11 +28,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    respond_with(@question.update(question_params)) if current_user.author_of?(@question)
+    respond_with(@question.update(question_params))
   end
 
   def destroy
-    respond_with(@question.destroy) if @question.user_id == current_user.id
+    respond_with(@question.destroy)
   end
 
   private

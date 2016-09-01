@@ -61,7 +61,7 @@ describe AnswersController do
 
       it 'redirect to the updated question' do
         patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
-        expect(response).to render_template :update
+        expect(response).to be_forbidden
       end
     end
   end

@@ -9,13 +9,13 @@
       - @question.attachments.each do |a|
         li id="attachment-id-#{a.id}"
           = link_to a.file.identifier, a.file.url
-          - if user_signed_in? && current_user.author_of?(question)
+          - if can?(:destroy, a)
             br
             = link_to 'удалить', attachment_path(a), method: :delete, remote: true
 
     br
 
-    - if user_signed_in? && current_user.author_of?(question)
+    - if can?(:crud, @question)
       = link_to 'Редактировать', '', class: 'edit_question_link'
       = link_to 'Удалить', question_path, method: :delete
 
