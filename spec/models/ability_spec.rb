@@ -79,7 +79,7 @@ RSpec.describe Ability do
 
     context "me" do
       it { should be_able_to :me, user, user: user }
-      it { should_not be_able_to :me, another, user: user }
+      it { should_not be_able_to :me, other, user: user }
     end
   end
 end
