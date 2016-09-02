@@ -28,6 +28,8 @@ class Ability
     can :crud, [Question, Answer], user: user
     can :create, Comment
 
+    can :me, User, id: user.id
+
     can :best, Answer, question: { user: user }
 
     can :manage, Attachment do |attachment|

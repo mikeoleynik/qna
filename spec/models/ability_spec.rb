@@ -76,5 +76,10 @@ RSpec.describe Ability do
       it { should be_able_to :best, answer, user: user }
       it { should_not be_able_to :best, other_answer, user: other }
     end    
+
+    context "me" do
+      it { should be_able_to :me, user, user: user }
+      it { should_not be_able_to :me, another, user: user }
+    end
   end
 end
