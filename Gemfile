@@ -60,6 +60,7 @@ group :development, :test do
   gem 'capybara-webkit', '~> 1.11', '>= 1.11.1'
   gem 'database_cleaner'
   gem 'capybara-email'
+  gem 'pry-byebug'
 end
 
 group :development do
