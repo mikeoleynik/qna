@@ -37,17 +37,17 @@ describe 'Question API' do
         end
       end
 
-      context 'answers' do    
-        it 'included in question object' do
-          expect(response.body).to have_json_size(1).at_path("questions/0/answers")
-        end
+      # context 'answers' do    
+      #   it 'included in question object' do
+      #     expect(response.body).to have_json_size(1).at_path("questions/0/answers")
+      #   end
 
-        %w(id body created_at updated_at).each do |attr|
-          it 'contains #{attr}' do
-            expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("questions/0/answers/0/#{attr}")
-          end
-        end  
-      end
+      #   %w(id body created_at updated_at).each do |attr|
+      #     it 'contains #{attr}' do
+      #       expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("questions/0/answers/0/#{attr}")
+      #     end
+      #   end  
+      # end
     end
   end
 
@@ -131,27 +131,27 @@ describe 'Question API' do
           end
         end
 
-        context 'comments' do
-          it 'included in answer object' do
-            expect(response.body).to have_json_size(2).at_path('question/answers/0/comments')
-          end
+        # context 'comments' do
+        #   it 'included in answer object' do
+        #     expect(response.body).to have_json_size(2).at_path('question/answers/0/comments')
+        #   end
 
-          %w(id comment_body user_id created_at updated_at).each do |attr|
-            it "contains #{attr}" do
-              expect(response.body).to be_json_eql(comment_for_answer.send(attr.to_sym).to_json).at_path("question/answers/0/comments/1/#{attr}")
-            end
-          end
-        end
+        #   %w(id comment_body user_id created_at updated_at).each do |attr|
+        #     it "contains #{attr}" do
+        #       expect(response.body).to be_json_eql(comment_for_answer.send(attr.to_sym).to_json).at_path("question/answers/0/comments/1/#{attr}")
+        #     end
+        #   end
+        # end
 
-        context 'attachments' do
-          it 'included in answer object' do
-            expect(response.body).to have_json_size(2).at_path('question/answers/0/attachments')
-          end
+        # context 'attachments' do
+        #   it 'included in answer object' do
+        #     expect(response.body).to have_json_size(2).at_path('question/answers/0/attachments')
+        #   end
 
-          it 'contains url' do
-            expect(response.body).to be_json_eql(attachment_for_answer.file.url.to_json).at_path('question/answers/0/attachments/1/url')
-          end
-        end
+        #   it 'contains url' do
+        #     expect(response.body).to be_json_eql(attachment_for_answer.file.url.to_json).at_path('question/answers/0/attachments/1/url')
+        #   end
+        # end
       end
     end
   end
