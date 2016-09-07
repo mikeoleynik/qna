@@ -112,28 +112,38 @@ describe 'Answers API' do
       let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
       context 'with valid attributes' do
-        it 'returns 201 status code' do
+
+        let(:request) do
           post "/api/v1/questions/#{question.id}/answers", answer: attributes_for(:answer), format: :json, access_token: access_token.token
+        end
+        
+        it 'returns 201 status code' do
+          request
           expect(response).to be_success
         end
 
         it 'creates new answer for user' do
-          expect { post "/api/v1/questions/#{question.id}/answers", answer: attributes_for(:answer), format: :json, access_token: access_token.token }.to change(user.answers, :count).by(1)
+          expect { request }.to change(user.answers, :count).by(1)
         end
 
         it 'creates new answer for question' do
-          expect { post "/api/v1/questions/#{question.id}/answers", answer: attributes_for(:answer), format: :json, access_token: access_token.token }.to change(question.answers, :count).by(1)
+          expect { request }.to change(question.answers, :count).by(1)
         end
       end
 
       context 'with invalid attributes' do
-        it 'returns 422 status code' do
+
+        let(:request) do
           post "/api/v1/questions/#{question.id}/answers", answer: attributes_for(:invalid_answer), format: :json, access_token: access_token.token
+        end
+        
+        it 'returns 422 status code' do
+          request
           expect(response.status).to eq 422
         end
 
         it 'does not save the answer in the database' do
-          expect { post "/api/v1/questions/#{question.id}/answers", answer: attributes_for(:invalid_answer), format: :json, access_token: access_token.token }.to_not change(Answer, :count)
+          expect { request }.to_not change(Answer, :count)
         end
       end
     end
