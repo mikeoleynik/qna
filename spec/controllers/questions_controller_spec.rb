@@ -62,10 +62,13 @@ describe QuestionsController do
   end
 
   describe 'POST #create' do
+    let(:path) { '/questions' }
+    let(:create_question) { post :create, question: attributes_for(:question) }
+    let(:invalid) { post :create, question: attributes_for(:invalid_question) }
+
+    it_behaves_like "Publishable"
 
     context 'with valid attributes' do
-      let(:create_question) { post :create, question: attributes_for(:question) }
-
       it 'saves the new question in the database' do
         expect { create_question }.to change(@user.questions, :count).by(1)
       end   
@@ -81,9 +84,7 @@ describe QuestionsController do
       end
     end
 
-    context 'with invalid attributes' do
-      let(:invalid) { post :create, question: attributes_for(:invalid_question) }
-
+    context 'with invalid attributes' do    
       it 'does not save the question' do
         expect { invalid }.to_not change(Question, :count)
       end   
