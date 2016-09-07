@@ -2,10 +2,9 @@ require 'rails_helper'
 
 
 describe VotesController do
-
-    let(:user)  { create(:user) }
-    let!(:question) { create(:question, user: user) }
-    let!(:answer)   { create(:answer, question: question, user: user)}
+  let(:user) { create(:user) }
+  let!(:question) { create(:question, user: user) }
+  let!(:answer) { create(:answer, question: question, user: user)}
 
 
   describe "POST #up" do
@@ -29,19 +28,8 @@ describe VotesController do
         expect(response).to have_http_status(200)
       end
     end
-  end
 
-    context "unregistered user" do
-
-      it "try to vote up" do
-        expect {post :up, question_id: question.id, id: question, votable: question, format: :json}.to_not change(Vote, :count)
-      end
-
-      it "send to client from server" do
-        post :up, question_id: question.id, id: question, votable: question, format: :json
-        expect(response).to have_http_status(401)
-      end
-    end
+    it_behaves_like "Unregistered"
 
     context "author can not vote up for your questions or answers" do
 
@@ -59,6 +47,10 @@ describe VotesController do
       end
     end
 
+    def send_vote
+      post :up, question_id: question.id, id: question, votable: question, format: :json
+    end
+  end
 
   describe "POST #down" do
 
@@ -82,17 +74,7 @@ describe VotesController do
       end
     end
 
-    context "unregistered user" do
-
-      it "try to vote down" do
-        expect {post :down, question_id: question.id, id: question, votable: question, format: :json}.to_not change(Vote, :count)
-      end
-
-      it "send to client from server" do
-        post :down, question_id: question.id, id: question, votable: question, format: :json
-        expect(response).to have_http_status(401)
-      end
-    end
+    it_behaves_like "Unregistered"
 
     context "author can not vote down for your questions or answers" do
 
@@ -109,8 +91,11 @@ describe VotesController do
         expect(response).to have_http_status(403)
       end
     end
-  end
 
+    def send_vote
+      post :down, question_id: question.id, id: question, votable: question, format: :json
+    end
+  end
 
   describe "POST #cancel" do
 
@@ -136,18 +121,7 @@ describe VotesController do
       end
     end
 
-    context "unregistered user" do
-
-      it "try to vote cancel" do
-        post :up, answer_id: answer.id, id: answer, votable: answer, format: :json
-        expect {post :unvote, question_id: question.id, id: question, votable: question, format: :json}.to_not change(Vote, :count)
-      end
-
-      it "send to client from server" do
-        post :up, question_id: question.id, id: question, votable: question, format: :json
-        expect(response).to have_http_status(401)
-      end
-    end
+    it_behaves_like "Unregistered" 
 
     context "author can not vote cancel for your questions or answers" do
 
@@ -165,6 +139,10 @@ describe VotesController do
         post :unvote, question_id: question.id, id: question, votable: question, format: :json
         expect(response).to have_http_status(403)
       end
+    end
+
+    def send_vote
+      post :unvote, question_id: question.id, id: question, votable: question, format: :json
     end
   end
 end
