@@ -62,30 +62,35 @@ describe QuestionsController do
   end
 
   describe 'POST #create' do
+    let(:path) { '/questions' }
+    let(:create_question) { post :create, question: attributes_for(:question) }
+    let(:invalid) { post :create, question: attributes_for(:invalid_question) }
+
+    it_behaves_like "Publishable"
 
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect { post :create, question: attributes_for(:question) }.to change(@user.questions, :count).by(1)
+        expect { create_question }.to change(@user.questions, :count).by(1)
       end   
 
       it  'compare users_id with new question users_id' do
-        post :create, question: attributes_for(:question)
+        create_question
         expect(assigns(question.user.id)).to eq @user_id
       end
 
       it 'renders create view' do
-        post :create, question: attributes_for(:question)
+        create_question
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
 
-    context 'with invalid attributes' do
+    context 'with invalid attributes' do    
       it 'does not save the question' do
-        expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
+        expect { invalid }.to_not change(Question, :count)
       end   
 
       it 're-renders new view' do
-        post :create, question: attributes_for(:invalid_question)
+        invalid
         expect(response).to render_template :new
       end
     end
@@ -94,8 +99,10 @@ describe QuestionsController do
   describe 'PATCH #update' do
 
     context 'with valid attributes' do
+      let(:valid) { patch :update, id: question, question: attributes_for(:question), format: :js }
+
       it 'assigns the requested question to @question' do
-        patch :update, id: question, question: attributes_for(:question), format: :js
+        valid
         expect(assigns(:question)).to eq question
       end
 
@@ -107,7 +114,7 @@ describe QuestionsController do
       end   
 
       it 'redirect to the updated question' do
-        patch :update, id: question, question: attributes_for(:question), format: :js
+        valid
         expect(response).to render_template :update
       end
     end
