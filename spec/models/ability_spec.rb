@@ -46,7 +46,16 @@ RSpec.describe Ability do
 
       it { should be_able_to :destroy, create(:answer, question: question, user: user), user: user }
       it { should_not be_able_to :destroy, create(:answer, question: question, user: other), user: user }
-    end        
+    end  
+
+    context "Subscription" do
+      let(:subscription) { question.subscriptions.first }
+      let(:other_subscription) { create :subscription }
+
+      it { should be_able_to :create, Subscription }
+      it { should be_able_to :destroy, subscription, user: user }
+      it { should_not be_able_to :destroy, other_subscription, user: user }
+    end      
 
     context 'Comment' do
       it {should be_able_to :create, Comment }
