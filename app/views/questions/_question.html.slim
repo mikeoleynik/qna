@@ -29,6 +29,13 @@
       = f.text_area :comment_body
       = f.submit 'Create'
 
+
+  .subscription
+    - if can?(:destroy, @subscription)
+      = link_to 'Unsubscribe', subscription_path(@subscription), method: :delete, remote: true
+    - else
+      = link_to 'Subscribe', question_subscriptions_path(@question), method: :post, remote: true      
+
   .edit_question_show
     = form_for @question, remote: true do |f|
       = f.label :title, 'Заголовок'
