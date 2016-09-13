@@ -51,6 +51,10 @@ html lang="en"
               li= link_to "Link 1", "/path1"
               li= link_to "Link 2", "/path2"
               li= link_to "Link 3", "/path3"
+              li = form_tag("/search", method: "get") do
+                = label_tag :query, ""
+                = text_field_tag :query 
+                = submit_tag "Search"
 
       footer
         p &copy; Company 2016
