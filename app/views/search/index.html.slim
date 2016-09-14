@@ -1,5 +1,7 @@
 h2 Результаты поиска:
-- if not @result.nil?
+- if @results.empty?
+  h4 По вашему запросу ничего не найдено
+- else
   ul
-  - @result.each do |obj|
-    =render :partial => "search/#{obj.class.name.downcase}", locals: {obj: obj}
+    - @results.each do |obj|
+      =render :partial => "search/#{obj.class.name.downcase}", locals: {obj: obj}

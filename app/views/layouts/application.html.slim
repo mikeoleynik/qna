@@ -49,11 +49,10 @@ html lang="en"
             ul.nav.nav-list
               li.nav-header Sidebar
               li= link_to "Link 1", "/path1"
-              li= link_to "Link 2", "/path2"
-              li= link_to "Link 3", "/path3"
               li = form_tag("/search", method: "get") do
                 = label_tag :query, ""
-                = text_field_tag :query 
+                = text_field_tag :query, params[:query]
+                = select_tag(:condition, options_for_select(Search::CONDITIONS, params[:condition]))
                 = submit_tag "Search"
 
       footer
