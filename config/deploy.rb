@@ -25,7 +25,7 @@ set :deploy_user, 'deployer'
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{ config/database.yml config/private_pub.yml .env }
+set :linked_files, %w{ config/database.yml config/private_pub_thin.yml .env }
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{ bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads }
