@@ -25,7 +25,7 @@ set :deploy_user, 'deployer'
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{ config/database.yml config/private_pub_thin.yml .env }
+set :linked_files, %w{ config/database.yml config/private_pub.yml config/private_pub_thin.yml .env }
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{ bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads }
@@ -70,16 +70,16 @@ namespace :private_pub do
     end
   end
 
-  desc 'Restart private_pub server'
-  task :restart do
-    on roles(:app) do
-      within current_path do
-        with rails_env: fetch(:rails_env) do
-          execute :bundle, "exec thin -C config/private_pub_thin.yml restart"
-        end
-      end
-    end
-  end
+  # desc 'Restart private_pub server'
+  # task :restart do
+  #   on roles(:app) do
+  #     within current_path do
+  #       with rails_env: fetch(:rails_env) do
+  #         execute :bundle, "exec thin -C config/private_pub_thin.yml restart"
+  #       end
+  #     end
+  #   end
+  # end
 end
 
 after 'deploy:restart', 'private_pub:restart'
