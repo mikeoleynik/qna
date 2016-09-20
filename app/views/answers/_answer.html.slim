@@ -1,40 +1,41 @@
-.answ id = "answer-#{answer.id}"
-  - if answer.persisted?
-    div class="answer-#{answer.id}" class=('best-answer' if answer.best?)
-      p= answer.body
-      = render partial: 'votes/vote', locals: {votable: answer, type: "answer"}
-      br
-      ul
-        - answer.attachments.each do |a|
-          li id="attachment-id-#{a.id}"
-            = link_to a.file.identifier, a.file.url
-            - if can?(:manage, a)
-              br
-              = link_to 'удалитьфайл', attachment_path(a), method: :delete, remote: true     
-                     
-      - if user_signed_in? && current_user.author_of?(answer)     
-        =link_to 'УдалитьОтвет', answer, method: :delete, remote: true
+- cache answer do
+  .answ id = "answer-#{answer.id}"
+    - if answer.persisted?
+      div class="answer-#{answer.id}" class=('best-answer' if answer.best?)
+        p= answer.body
+        = render partial: 'votes/vote', locals: {votable: answer, type: "answer"}
         br
-        =link_to 'Редактировать', '', class: 'edit-answer-link', data: { answer_id: answer.id }
-        p
-          =form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-            p=f.label :body, 'редакция'
-            .answer-errors
-            p=f.text_area :body
-            p=f.submit 'Сохранить' 
+        ul
+          - answer.attachments.each do |a|
+            li id="attachment-id-#{a.id}"
+              = link_to a.file.identifier, a.file.url
+              - if can?(:manage, a)
+                br
+                = link_to 'удалитьфайл', attachment_path(a), method: :delete, remote: true     
+                       
+        - if user_signed_in? && current_user.author_of?(answer)     
+          =link_to 'УдалитьОтвет', answer, method: :delete, remote: true
+          br
+          =link_to 'Редактировать', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+          p
+            =form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+              p=f.label :body, 'редакция'
+              .answer-errors
+              p=f.text_area :body
+              p=f.submit 'Сохранить' 
 
-        - if answer.best?
-          b= 'Этот ответ лучший'
-        - else can?(:best, answer)
-          = link_to 'Лучший ответ', best_answer_path(answer), method: :patch, remote: true
+          - if answer.best?
+            b= 'Этот ответ лучший'
+          - else can?(:best, answer)
+            = link_to 'Лучший ответ', best_answer_path(answer), method: :patch, remote: true
 
-      .comments
-        - answer.comments.each do |c|
-          = render partial: 'comments/comment', locals: {comment: c}
-        = link_to 'коммент','', class: 'create-comment-link', data: { commentable_id: answer.id }
-        = form_for [ answer, answer.comments.build ], method: "post", remote: true, html: { id: "create-comment-#{answer.id}"} do |f|
-          = f.label :comment_body, "Комментарий"
-          = f.text_area :comment_body
-          = f.submit 'Create'
-            
+        .comments
+          - answer.comments.each do |c|
+            = render partial: 'comments/comment', locals: {comment: c}
+          = link_to 'коммент','', class: 'create-comment-link', data: { commentable_id: answer.id }
+          = form_for [ answer, answer.comments.build ], method: "post", remote: true, html: { id: "create-comment-#{answer.id}"} do |f|
+            = f.label :comment_body, "Комментарий"
+            = f.text_area :comment_body
+            = f.submit 'Create'
+              
 

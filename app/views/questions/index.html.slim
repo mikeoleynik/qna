@@ -1,9 +1,10 @@
-h3.text-center Вопросы
-.questions
-  - @questions.each do |q|
-    p = q.title
-    = link_to 'Показать', question_path(q)
-    - if user_signed_in? && current_user.id == q.user_id
-        p = link_to 'Удалить', question_path(q), method: :delete
+- cache collection_cache_key_for :question do
+  h3.text-center Вопросы
+  .questions
+    - @questions.each do |q|
+      p = q.title
+      = link_to 'Показать', question_path(q)
+      - if user_signed_in? && current_user.id == q.user_id
+          p = link_to 'Удалить', question_path(q), method: :delete
 
-= subscribe_to "/questions"
+  = subscribe_to "/questions"
