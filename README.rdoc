@@ -1,28 +1,25 @@
-== README
+Учебное приложение для курсов профессиональной разработки на ROR - http://ror.thinknetica.com/  
+Используется:  
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby - 2.2.1  
 
-Things you may want to cover:
+* Rails - 4.2.6  
 
-* Ruby version
+* RSpec - 3.2.1  
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* PostgreSQL - 9.3.6  
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Тестирование: написаны интеграционные, юнит-тесты, протестирован json, API, background jobs, mailers  
+* Gems: rspec, capybara, json_spec, shoulda-matchers.  
+* Авторизация: devise  
+* Аутентификация: cancancan  
+* Ajax  
+* Включены: Nested Forms и полиморфные ассоциации  
+* Comet и Pub/Sub: private_pub  
+* Авторизация через соц. сети (facebook, twitter): omniauth, omniauth-facebook, omniauth-twitter  
+* Реализован REST API для вопросов, ответов, профиля.  
+* Background jobs: sidekiq, whenever  
+* Полнотекстовый поиск на Sphinx  
+* Deploy: capistrano  
+* На сервере был настроен: ngnix, passenger, a затем unicorn, monit, backup.
