@@ -9,7 +9,6 @@
 * RSpec - 3.5.0  
 
 * PostgreSQL - 9.3.14  
-
 * Тестирование: написаны интеграционные, юнит-тесты, протестирован json, API, background jobs, mailers  
     * Gems: rspec, capybara, json_spec, shoulda-matchers.  
 * Авторизация: devise  
