@@ -1,4 +1,4 @@
-Учебное приложение для курсов профессиональной разработки на ROR - [Thinknetica](http://ror.thinknetica.com/)  
+Учебное приложение для курсов профессиональной разработки на ROR - [Thinknetica](http://ror.thinknetica.com)
 
 Используется:  
 
@@ -9,7 +9,7 @@
 * RSpec - 3.2.1  
 
 * PostgreSQL - 9.3.6  
-  
+
 
 
 * Тестирование: написаны интеграционные, юнит-тесты, протестирован json, API, background jobs, mailers  
